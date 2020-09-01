@@ -1,22 +1,25 @@
 # basics
 ```
-~/src/watchmon $ compgen -W 'aaa bbb ccc' b
+$ compgen -W 'aaa bbb ccc' b
 bbb
 
-~/src/watchmon $ compgen -W 'aaa bba bbc bbc ccc' b
+$ compgen -W 'aaa bba bbc bbc ccc' b
 bba
 bbc
 bbc
 
-~/src/watchmon $ compgen -W 'aaa bba bbc bbc ccc' bb
+$ compgen -W 'aaa bba bbc bbc ccc' bb
 bba
 bbc
 bbc
 
-~/src/watchmon $ compgen -W 'aaa bba bbc bbc ccc' bbc
+$ compgen -W 'aaa bba bbc bbc ccc' bbc
 bbc
 bbc
 ```
+> -W means to understand the value of $1 as words
+
+> constructing string in shell is easy
 
 To connect this with an executable:
 
@@ -31,7 +34,7 @@ _magic_completions(){ $MAGICWORDS }
 complete -F _magic_completions magic
 ```
 
-# very simple
+# very simple: sequential arrays of string
 
 ```
 _magic_completions()
@@ -45,6 +48,8 @@ _magic_completions()
 complete -F _magic_completions magic
 ```
 
+> COMPREPLY is the array that holds the options you currently can complete
+> into. Populating it by any means, is what shell completion is about.
 
 # magic variables
 
@@ -74,7 +79,7 @@ ${COMP_WORDS[COMP_CWORD-1]}
 ```
 _magic_completions()
 {
-  COMPREPLY=($(compgen -W "now tomorrow never" -- "${COMP_WORDS[COMP_CWORD]}"))
+  COMPREPLY=($(compgen -W "yolo yeeees yet xylo" -- "${COMP_WORDS[COMP_CWORD]}"))
 }
 
 complete -F _magic_completions magic
@@ -84,8 +89,8 @@ source the file and try tab magic:
 
 ```
 . magic-completion
-./magic <TAB><TAB>
-now tomorrow never
+./magic y<TAB><TAB>
+yolo yeeees yet
 ```
 
 # A useful bash golem
