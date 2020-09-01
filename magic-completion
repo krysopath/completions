@@ -1,19 +1,21 @@
 # watchmon completion                                      -*- shell-script -*-
 
 __get_corrections() {
+  MATCH=\^"${1}"
   echo "$1" \
   | aspell -a 2>/dev/null \
   | sed 1d \
   | awk -F: '{ print $2 }' \
   | tr -d '[:blank:]'\
-  | tr ',' '\n'
+  | tr ',' '\n' \
+  | grep -i "$MATCH"
 }
 
 _magic_completions()
 {
   local current
   current="${COMP_WORDS[COMP_CWORD]}"
-  COMPREPLY=($(compgen -W "$(__get_corrections "$current" )" -- "$current" ))
+  COMPREPLY=($(compgen -W "$(__get_corrections $current)" -- $current ))
   return 0
 }
 
