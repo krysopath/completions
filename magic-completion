@@ -1,14 +1,13 @@
 # watchmon completion                                      -*- shell-script -*-
 
 __get_corrections() {
-  MATCH=\^"${1}"
   echo "$1" \
   | aspell -a 2>/dev/null \
   | sed 1d \
   | awk -F: '{ print $2 }' \
   | tr -d '[:blank:]'\
   | tr ',' '\n' \
-  | grep -i "$MATCH"
+  | grep -i "^${1}"
 }
 
 _magic_completions()
