@@ -19,5 +19,4 @@ _magic_completions()
   return 0
 }
 
-
 complete -F _magic_completions magic
